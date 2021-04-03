@@ -4,7 +4,7 @@ from selenium import webdriver
 
 link = "http://selenium1py.pythonanywhere.com/"
 
-@pytest.fixture(scope="class")
+@pytest.fixture
 def browser():
     print("\nstart browser for test...")
     browser = webdriver.Chrome()
@@ -13,16 +13,21 @@ def browser():
     print("\nquid browser...")
     browser.quit()
 
+@pytest.fixture(autouse=True)
+def prepare_data():
+    print()
+    print("preparing some critical data for every test")
+
 class TestMainPage1():
     # вызываем фикстуру в тесте, передав её как параметр
     def test_quest_should_see_login_link(self, browser):
-        print("start test1")
+        #print("start test1")
         browser.get(link)
         browser.find_element_by_css_selector("#login_link")
-        print("finish test1")
+        #print("finish test1")
 
     def test_quest_should_see_basket_link_on_the_main_page(self, browser):
-        print("start test2")
+        #print("start test2")
         browser.get(link)
         browser.find_element_by_css_selector(".basket-mini .btn-group > a")
-        print("finish test2")
+        #print("finish test2")
